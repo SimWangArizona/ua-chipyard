@@ -16,6 +16,11 @@ Load the Chipyard environment:
 cd /workspace/chipyard
 source env.sh
 ```
+Compile the benchmark:
+```
+cd /workspace/course/benchmarks
+make
+```
 
 Compile the configuration (current: ` BaselineConfig `, ` LargeL1Config `):
 ```
