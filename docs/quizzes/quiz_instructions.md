@@ -17,7 +17,7 @@ cd /workspace/chipyard
 source env.sh
 ```
 
-Compile the configuration (current: BaselineConfig, LargeL1Config):
+Compile the configuration (current: ` BaselineConfig `, ` LargeL1Config `):
 ```
 cd /workspace/chipyard/sims/verilator
 make CONFIG=LargeL1Config
