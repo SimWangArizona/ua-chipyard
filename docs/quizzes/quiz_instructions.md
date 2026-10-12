@@ -25,7 +25,7 @@ make CONFIG=LargeL1Config
 
 Run the provided ISP benchmark:
 
-` quiz-run isp LargeL1Config` or the full path ` /workspace/course-scripts/quiz-run.sh isp LargeL1Config` should work with up-to-date repos. Note that BaselineConfig is the default configuration in the script, so if you don't specify a config, it will run the baseline.
+` quiz-run LargeL1Config isp` or the full path ` /workspace/course-scripts/quiz-run.sh LargeL1Config isp` should work with up-to-date repos. Note that BaselineConfig is the default configuration in the script, so if you don't specify a config, it will run the baseline.
 
 This might take several minutes depending on your computer speed. The output should provide performance statistics for the different phases of isp_bench:  
 gain  
