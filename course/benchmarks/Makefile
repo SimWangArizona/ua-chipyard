@@ -20,7 +20,7 @@ CMODEL ?= medany
 SPECS  ?= htif_nano.specs
 LDSCRIPT ?= htif.ld
 
-OUTDIR ?= /workspace/course/benchmarks/bin
+OUTDIR ?= /workspace/output/
 
 # -specs appears once only: we compile and link in a single gcc invocation, and
 # reading htif_nano.specs twice makes gcc fail with

@@ -4,7 +4,7 @@ set -euo pipefail
 CONFIG="${1:-BaselineConfig}"
 
 SIM="/workspace/chipyard/sims/verilator/simulator-chipyard.harness-${CONFIG}"
-BENCH="/workspace/course/benchmarks/bin/isp_bench.riscv"
+BENCH="/workspace/output/isp_bench.riscv"
 
 if [[ ! -x "$SIM" ]]; then
     echo "Error: simulator not found for config: $CONFIG"
