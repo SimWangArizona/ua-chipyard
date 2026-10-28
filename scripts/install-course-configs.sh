@@ -22,3 +22,20 @@ for file in "$SRC"/*.scala; do
 done
 
 echo "Course configurations ready."
+
+# Student hardware belongs on the main source path; test suites do not.
+# Retain the directory tree so two projects may use the same filename.
+STUDENT_SRC="/workspace/student-work"
+STUDENT_DST="/workspace/chipyard/generators/chipyard/src/main/scala/student-work"
+mkdir -p "$STUDENT_DST"
+if [ -d "$STUDENT_SRC" ]; then
+    while IFS= read -r -d '' file; do
+        relative="${file#"$STUDENT_SRC/"}"
+        case "$relative" in
+            src/test/*|test/*|tests/*|*/src/test/*|*/test/*|*/tests/*|*Spec.scala|build/*|target/*|*/build/*|*/target/*) continue ;;
+        esac
+        mkdir -p "$STUDENT_DST/$(dirname "$relative")"
+        ln -sf "$file" "$STUDENT_DST/$relative"
+        echo "  student-work/$relative"
+    done < <(find "$STUDENT_SRC" -type f -name '*.scala' -print0)
+fi
