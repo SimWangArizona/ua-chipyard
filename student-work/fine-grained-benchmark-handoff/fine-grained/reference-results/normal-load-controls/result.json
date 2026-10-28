@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "sizes": [
+    1,
+    4
+  ],
+  "comparison": "Exact per-trial cycles, instructions, checksum and input fingerprints on identical ELFs."
+}

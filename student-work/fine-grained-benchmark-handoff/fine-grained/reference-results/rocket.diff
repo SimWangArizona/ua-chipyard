@@ -1,0 +1,142 @@
+diff --git a/src/main/scala/rocket/ALU.scala b/src/main/scala/rocket/ALU.scala
+index ca8a11067..74f157dfd 100644
+--- a/src/main/scala/rocket/ALU.scala
++++ b/src/main/scala/rocket/ALU.scala
+@@ -32,6 +32,9 @@ object ALU {
+   def FN_ROL  = 17.U
+   def FN_ROR  = 18.U
+   def FN_BEXT = 19.U
++  def FN_FG_DOT4_ACC = 21.U
++  def FN_FG_ADD_MAX = 22.U
++  def FN_FG_ADD_MIN = 23.U
+ 
+   def FN_ANDN = 24.U
+   def FN_ORN  = 25.U
+@@ -160,6 +163,46 @@ class ALU(implicit p: Parameters) extends AbstractALU()(p) {
+   val rotout_l = Reverse(rotout_r)
+   val rotout = Mux(io.fn(0), rotout_r, rotout_l) | Mux(io.fn(0), shout_l, shout_r)
+ 
++  // Packed native DP: in1 = {c32, a32}, in2.low32 = b32.
++  // Use a dedicated 32-bit sum: packed c must not participate in arithmetic.
++  val useFineGrainedDP = coreParams match {
++    case r: RocketCoreParams => r.useFineGrainedDP
++    case _ => false
++  }
++  val fineGrainedDPResults = if (useFineGrainedDP) {
++    require(xLen == 64, "Native packed DP requires RV64")
++    val sum32 = Wire(UInt(32.W))
++    sum32 := io.in1(31,0) + io.in2(31,0)
++    val c32 = io.in1(63,32)
++    val sumLess = sum32.asSInt < c32.asSInt
++    val max32 = Mux(sumLess, c32, sum32)
++    val min32 = Mux(sumLess, sum32, c32)
++    Seq(
++      FN_FG_ADD_MAX -> Cat(Fill(32, max32(31)), max32),
++      FN_FG_ADD_MIN -> Cat(Fill(32, min32(31)), min32)
++    )
++  } else Nil
++
++  // Four signed INT8 lanes; accumulation wraps only at the final 32 bits.
++  val useFineGrainedDot = coreParams match {
++    case r: RocketCoreParams => r.useFineGrainedDot
++    case _ => false
++  }
++  val fineGrainedDotResults = if (useFineGrainedDot) {
++    require(xLen == 64, "Native packed dot requires RV64")
++    val products = (0 until 4).map { i =>
++      val a = io.in1(8*i+7, 8*i).asSInt
++      val b = io.in2(8*i+7, 8*i).asSInt
++      a * b // 16-bit signed product
++    }
++    val pair01 = products(0) +& products(1) // 17 bits
++    val pair23 = products(2) +& products(3) // 17 bits
++    val dot18 = pair01 +& pair23 // 18 bits, includes +65536
++    val accumulated = io.in1(63,32).asSInt +& dot18 // 33 bits
++    val result32 = accumulated.asUInt(31,0)
++    Seq(FN_FG_DOT4_ACC -> Cat(Fill(32, result32(31)), result32))
++  } else Nil
++
+   val out = MuxLookup(io.fn, shift_logic_cond)(Seq(
+     FN_ADD -> io.adder_out,
+     FN_SUB -> io.adder_out
+@@ -171,7 +214,7 @@ class ALU(implicit p: Parameters) extends AbstractALU()(p) {
+     FN_MINU -> maxmin_out,
+     FN_ROL -> rotout,
+     FN_ROR -> rotout,
+-  ) else Nil))
++  ) else Nil) ++ fineGrainedDPResults ++ fineGrainedDotResults)
+ 
+ 
+   io.out := out
+diff --git a/src/main/scala/rocket/CustomInstructions.scala b/src/main/scala/rocket/CustomInstructions.scala
+index 0427fb401..190c3c709 100644
+--- a/src/main/scala/rocket/CustomInstructions.scala
++++ b/src/main/scala/rocket/CustomInstructions.scala
+@@ -6,6 +6,10 @@ package freechips.rocketchip.rocket
+ import chisel3.util._
+ 
+ object CustomInstructions {
++  def FG_DOT4_ACC = BitPat("b0000001??????????000?????0001011")
++  // Fine-grained native DP, custom-0, two integer sources.
++  def FG_ADD_MAX = BitPat("b0000010??????????000?????0001011")
++  def FG_ADD_MIN = BitPat("b0000011??????????000?????0001011")
+   def MNRET              = BitPat("b01110000001000000000000001110011")
+   def CEASE              = BitPat("b00110000010100000000000001110011")
+   def CFLUSH_D_L1        = BitPat("b111111000000?????000000001110011")
+diff --git a/src/main/scala/rocket/IDecode.scala b/src/main/scala/rocket/IDecode.scala
+index e61d11dd2..29bbd330a 100644
+--- a/src/main/scala/rocket/IDecode.scala
++++ b/src/main/scala/rocket/IDecode.scala
+@@ -138,6 +138,19 @@ class FenceIDecode(flushDCache: Boolean)(implicit val p: Parameters) extends Dec
+     FENCE_I->   List(Y,N,N,N,N,N,N,N,A2_X,   A1_X,   IMM_X, DW_X,  FN_X,     v,cmd,        N,N,N,N,N,N,N,CSR.N,Y,Y,N,N))
+ }
+ 
++class FineGrainedDotDecode(implicit val p: Parameters) extends DecodeConstants
++{
++  val table: Array[(BitPat, List[BitPat])] = Array(
++    FG_DOT4_ACC-> List(Y,N,N,N,N,N,Y,Y,A2_RS2,A1_RS1,IMM_X,DW_XPR,FN_FG_DOT4_ACC,N,M_X,N,N,N,N,N,N,Y,CSR.N,N,N,N,N))
++}
++
++class FineGrainedDPDecode(implicit val p: Parameters) extends DecodeConstants
++{
++  val table: Array[(BitPat, List[BitPat])] = Array(
++    FG_ADD_MAX-> List(Y,N,N,N,N,N,Y,Y,A2_RS2,A1_RS1,IMM_X,DW_XPR,FN_FG_ADD_MAX,N,M_X,N,N,N,N,N,N,Y,CSR.N,N,N,N,N),
++    FG_ADD_MIN-> List(Y,N,N,N,N,N,Y,Y,A2_RS2,A1_RS1,IMM_X,DW_XPR,FN_FG_ADD_MIN,N,M_X,N,N,N,N,N,N,Y,CSR.N,N,N,N,N))
++}
++
+ class ConditionalZeroDecode(implicit val p: Parameters) extends DecodeConstants
+ {
+   val table: Array[(BitPat, List[BitPat])] = Array(
+diff --git a/src/main/scala/rocket/RocketCore.scala b/src/main/scala/rocket/RocketCore.scala
+index 02f314725..458da354f 100644
+--- a/src/main/scala/rocket/RocketCore.scala
++++ b/src/main/scala/rocket/RocketCore.scala
+@@ -27,6 +27,8 @@ case class RocketCoreParams(
+   useCompressed: Boolean = true,
+   useRVE: Boolean = false,
+   useConditionalZero: Boolean = false,
++  useFineGrainedDP: Boolean = false,
++  useFineGrainedDot: Boolean = false,
+   useZba: Boolean = false,
+   useZbb: Boolean = false,
+   useZbs: Boolean = false,
+@@ -235,6 +237,8 @@ class Rocket(tile: RocketTile)(implicit p: Parameters) extends CoreModule()(p)
+     (usingDebug.option(new DebugDecode)) ++:
+     (usingNMI.option(new NMIDecode)) ++:
+     (usingConditionalZero.option(new ConditionalZeroDecode)) ++:
++    (rocketParams.useFineGrainedDP.option(new FineGrainedDPDecode)) ++:
++    (rocketParams.useFineGrainedDot.option(new FineGrainedDotDecode)) ++:
+     Seq(new FenceIDecode(tile.dcache.flushOnFenceI)) ++:
+     coreParams.haveCFlush.option(new CFlushDecode(tile.dcache.canSupportCFlushLine)) ++:
+     rocketParams.haveCease.option(new CeaseDecode) ++:
+@@ -322,6 +326,10 @@ class Rocket(tile: RocketTile)(implicit p: Parameters) extends CoreModule()(p)
+   ibuf.io.kill := take_pc
+ 
+   require(decodeWidth == 1 /* TODO */ && retireWidth == decodeWidth)
++  require(!rocketParams.useFineGrainedDP || xLen == 64, "Native packed DP requires RV64")
++  require(!(usingRoCC && rocketParams.useFineGrainedDP), "Native DP overlaps RoCC custom decode")
++  require(!rocketParams.useFineGrainedDot || xLen == 64, "Native packed dot requires RV64")
++  require(!(usingRoCC && rocketParams.useFineGrainedDot), "Native dot overlaps RoCC custom decode")
+   require(!(coreParams.useRVE && coreParams.fpu.nonEmpty), "Can't select both RVE and floating-point")
+   require(!(coreParams.useRVE && coreParams.useHypervisor), "Can't select both RVE and Hypervisor")
+   val id_ctrl = Wire(new IntCtrlSigs).decode(id_inst(0), decode_table)

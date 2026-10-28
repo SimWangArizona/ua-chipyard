@@ -1,0 +1,96 @@
+{
+  "status": "PASS",
+  "exit_code": 0,
+  "records": [
+    {
+      "workload": "floyd_warshall",
+      "size": "16",
+      "implementation": "baseline",
+      "trial": "1",
+      "platform": "rocket_rv64",
+      "status": "PASS",
+      "cycles": "84145",
+      "instructions": "47021",
+      "cpi": "",
+      "host_elapsed_ns": "",
+      "checksum": "11240292256217225581"
+    },
+    {
+      "workload": "floyd_warshall",
+      "size": "16",
+      "implementation": "baseline",
+      "trial": "2",
+      "platform": "rocket_rv64",
+      "status": "PASS",
+      "cycles": "84055",
+      "instructions": "47021",
+      "cpi": "",
+      "host_elapsed_ns": "",
+      "checksum": "11240292256217225581"
+    },
+    {
+      "workload": "floyd_warshall",
+      "size": "16",
+      "implementation": "baseline",
+      "trial": "3",
+      "platform": "rocket_rv64",
+      "status": "PASS",
+      "cycles": "84055",
+      "instructions": "47021",
+      "cpi": "",
+      "host_elapsed_ns": "",
+      "checksum": "11240292256217225581"
+    },
+    {
+      "workload": "floyd_warshall",
+      "size": "16",
+      "implementation": "custom",
+      "trial": "1",
+      "platform": "rocket_rv64",
+      "status": "PASS",
+      "cycles": "117839",
+      "instructions": "94474",
+      "cpi": "",
+      "host_elapsed_ns": "",
+      "checksum": "11240292256217225581"
+    },
+    {
+      "workload": "floyd_warshall",
+      "size": "16",
+      "implementation": "custom",
+      "trial": "2",
+      "platform": "rocket_rv64",
+      "status": "PASS",
+      "cycles": "117774",
+      "instructions": "94474",
+      "cpi": "",
+      "host_elapsed_ns": "",
+      "checksum": "11240292256217225581"
+    },
+    {
+      "workload": "floyd_warshall",
+      "size": "16",
+      "implementation": "custom",
+      "trial": "3",
+      "platform": "rocket_rv64",
+      "status": "PASS",
+      "cycles": "117774",
+      "instructions": "94474",
+      "cpi": "",
+      "host_elapsed_ns": "",
+      "checksum": "11240292256217225581"
+    }
+  ],
+  "elapsed_seconds": 1361.8530446469995,
+  "timeout_seconds": 28800,
+  "run_command": [
+    "/workspace/chipyard/sims/verilator/simulator-chipyard.harness-FineGrainedConfig",
+    "+permissive",
+    "+loadmem=/workspace/student-work/fine-grained/results/20261015T002635Z-s8/FineGrainedConfig-floyd_warshall-16.riscv",
+    "+permissive-off",
+    "/workspace/student-work/fine-grained/results/20261015T002635Z-s8/FineGrainedConfig-floyd_warshall-16.riscv"
+  ],
+  "input": [
+    "INPUT,floyd_warshall,16,16960531908611114451"
+  ]
+}

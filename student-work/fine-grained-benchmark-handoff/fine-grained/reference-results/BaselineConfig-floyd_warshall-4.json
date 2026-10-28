@@ -1,0 +1,55 @@
+{
+  "status": "PASS",
+  "exit_code": 0,
+  "records": [
+    {
+      "workload": "floyd_warshall",
+      "size": "4",
+      "implementation": "baseline",
+      "trial": "1",
+      "platform": "rocket_rv64",
+      "status": "PASS",
+      "cycles": "1474",
+      "instructions": "883",
+      "cpi": "",
+      "host_elapsed_ns": "",
+      "checksum": "435389026148189153"
+    },
+    {
+      "workload": "floyd_warshall",
+      "size": "4",
+      "implementation": "baseline",
+      "trial": "2",
+      "platform": "rocket_rv64",
+      "status": "PASS",
+      "cycles": "1474",
+      "instructions": "883",
+      "cpi": "",
+      "host_elapsed_ns": "",
+      "checksum": "435389026148189153"
+    },
+    {
+      "workload": "floyd_warshall",
+      "size": "4",
+      "implementation": "baseline",
+      "trial": "3",
+      "platform": "rocket_rv64",
+      "status": "PASS",
+      "cycles": "1474",
+      "instructions": "883",
+      "cpi": "",
+      "host_elapsed_ns": "",
+      "checksum": "435389026148189153"
+    }
+  ],
+  "run_command": [
+    "/workspace/chipyard/sims/verilator/simulator-chipyard.harness-BaselineConfig",
+    "+permissive",
+    "+loadmem=/workspace/student-work/fine-grained/results/20261015T002635Z-s8/BaselineConfig-floyd_warshall-4.riscv",
+    "+permissive-off",
+    "/workspace/student-work/fine-grained/results/20261015T002635Z-s8/BaselineConfig-floyd_warshall-4.riscv"
+  ],
+  "input": [
+    "INPUT,floyd_warshall,4,8803296772371840881"
+  ]
+}
