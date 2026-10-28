@@ -2,6 +2,58 @@
 
 Roadmap: [../fine_grained_stages.md](../fine_grained_stages.md). Current progress: [STATUS.md](STATUS.md). Candidate instruction interface: [isa_spec.md](isa_spec.md).
 
+## Fresh-container path to benchmark results
+
+Use the UA course Docker image with this repository checked out, so this directory
+is mounted at `/workspace/student-work/fine-grained`. The Rocket checkout must be
+at revision `55bcad0f59436de98ea510334121de8546b9e9d7`; the installer checks
+this and refuses unrelated Rocket source changes. Run the following **inside one
+container shell**. The course entrypoint normally installs `BaselineConfig`.
+
+```bash
+cd /workspace/chipyard
+source env.sh
+export _JAVA_OPTIONS='-Xmx3G -XX:ActiveProcessorCount=2'
+cd /workspace/student-work/fine-grained
+python3 scripts/install_s5.py
+cd /workspace/chipyard/sims/verilator
+make CONFIG=BaselineConfig -j2
+make CONFIG=FineGrainedConfig -j2
+cd /workspace/student-work/fine-grained
+make all-hw
+make pipeline
+python3 scripts/benchmark_s8.py --sizes 1 4 7 8 --workers 4 --timeout 28800
+```
+
+`install_s5.py` applies the cumulative DOT4_ACC and ADD_MIN/ADD_MAX patch and
+links the student configuration. The two `make` commands build the simulator
+paths required by S8; neither `make software` nor `make s7-build` alone creates
+both at those standard paths. `make all-hw` and `make pipeline` must finish with
+PASS before using the benchmark result. The last command is a **short profile**:
+its `result.json` reports `full_s8: false`, even when all selected cases pass.
+
+For the complete six-size S8 run, after the short profile has finished, start a
+**new** benchmark run:
+
+```bash
+cd /workspace/student-work/fine-grained
+python3 scripts/benchmark_s8.py --workers 4 --timeout 28800
+```
+
+The runner prints a timestamped directory under `results/`. A complete result
+requires `S8 PASS` and `result.json` with `status: "PASS"`, `full_s8: true`,
+`records: 108`, and no failures. Read that directory's `report.md` and CSV files;
+the root `benchmark_report.md` is overwritten by the most recent selected run.
+N=32 simulations can take hours. If interrupted, resume only after the old runner
+has stopped, replacing the timestamp below with the actual evidence directory:
+
+```bash
+python3 scripts/benchmark_s8.py --resume /workspace/student-work/fine-grained/results/<timestamp>-s8 --workers 4 --timeout 28800
+```
+
+The earlier completed full report is included in this repository as historical
+evidence; a fresh run must produce its own passing evidence.
+
 Inside the course Docker container:
 
 ```bash
