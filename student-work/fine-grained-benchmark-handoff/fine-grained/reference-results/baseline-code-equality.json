@@ -1,0 +1,149 @@
+{
+  "status": "PASS",
+  "comparisons": [
+    {
+      "case": "BaselineConfig-floyd_warshall-1.disassembly.txt",
+      "function": "dot_baseline",
+      "instructions": 33,
+      "instruction_words_sha256": "c71386c8039cdf31e71287515b3a1942237f29954c5e7a5572c89cbf6b9432cf"
+    },
+    {
+      "case": "BaselineConfig-floyd_warshall-1.disassembly.txt",
+      "function": "dp_baseline",
+      "instructions": 39,
+      "instruction_words_sha256": "b4ab1ee2394c53abf49625d6c2be3941e148f1fbeeeedabe3aedc8e9a7dbb72a"
+    },
+    {
+      "case": "BaselineConfig-floyd_warshall-16.disassembly.txt",
+      "function": "dot_baseline",
+      "instructions": 33,
+      "instruction_words_sha256": "c71386c8039cdf31e71287515b3a1942237f29954c5e7a5572c89cbf6b9432cf"
+    },
+    {
+      "case": "BaselineConfig-floyd_warshall-16.disassembly.txt",
+      "function": "dp_baseline",
+      "instructions": 39,
+      "instruction_words_sha256": "b4ab1ee2394c53abf49625d6c2be3941e148f1fbeeeedabe3aedc8e9a7dbb72a"
+    },
+    {
+      "case": "BaselineConfig-floyd_warshall-32.disassembly.txt",
+      "function": "dot_baseline",
+      "instructions": 33,
+      "instruction_words_sha256": "c71386c8039cdf31e71287515b3a1942237f29954c5e7a5572c89cbf6b9432cf"
+    },
+    {
+      "case": "BaselineConfig-floyd_warshall-32.disassembly.txt",
+      "function": "dp_baseline",
+      "instructions": 39,
+      "instruction_words_sha256": "b4ab1ee2394c53abf49625d6c2be3941e148f1fbeeeedabe3aedc8e9a7dbb72a"
+    },
+    {
+      "case": "BaselineConfig-floyd_warshall-4.disassembly.txt",
+      "function": "dot_baseline",
+      "instructions": 33,
+      "instruction_words_sha256": "c71386c8039cdf31e71287515b3a1942237f29954c5e7a5572c89cbf6b9432cf"
+    },
+    {
+      "case": "BaselineConfig-floyd_warshall-4.disassembly.txt",
+      "function": "dp_baseline",
+      "instructions": 39,
+      "instruction_words_sha256": "b4ab1ee2394c53abf49625d6c2be3941e148f1fbeeeedabe3aedc8e9a7dbb72a"
+    },
+    {
+      "case": "BaselineConfig-floyd_warshall-7.disassembly.txt",
+      "function": "dot_baseline",
+      "instructions": 33,
+      "instruction_words_sha256": "c71386c8039cdf31e71287515b3a1942237f29954c5e7a5572c89cbf6b9432cf"
+    },
+    {
+      "case": "BaselineConfig-floyd_warshall-7.disassembly.txt",
+      "function": "dp_baseline",
+      "instructions": 39,
+      "instruction_words_sha256": "b4ab1ee2394c53abf49625d6c2be3941e148f1fbeeeedabe3aedc8e9a7dbb72a"
+    },
+    {
+      "case": "BaselineConfig-floyd_warshall-8.disassembly.txt",
+      "function": "dot_baseline",
+      "instructions": 33,
+      "instruction_words_sha256": "c71386c8039cdf31e71287515b3a1942237f29954c5e7a5572c89cbf6b9432cf"
+    },
+    {
+      "case": "BaselineConfig-floyd_warshall-8.disassembly.txt",
+      "function": "dp_baseline",
+      "instructions": 39,
+      "instruction_words_sha256": "b4ab1ee2394c53abf49625d6c2be3941e148f1fbeeeedabe3aedc8e9a7dbb72a"
+    },
+    {
+      "case": "BaselineConfig-int8_matmul-1.disassembly.txt",
+      "function": "dot_baseline",
+      "instructions": 33,
+      "instruction_words_sha256": "c71386c8039cdf31e71287515b3a1942237f29954c5e7a5572c89cbf6b9432cf"
+    },
+    {
+      "case": "BaselineConfig-int8_matmul-1.disassembly.txt",
+      "function": "dp_baseline",
+      "instructions": 39,
+      "instruction_words_sha256": "b4ab1ee2394c53abf49625d6c2be3941e148f1fbeeeedabe3aedc8e9a7dbb72a"
+    },
+    {
+      "case": "BaselineConfig-int8_matmul-16.disassembly.txt",
+      "function": "dot_baseline",
+      "instructions": 33,
+      "instruction_words_sha256": "c71386c8039cdf31e71287515b3a1942237f29954c5e7a5572c89cbf6b9432cf"
+    },
+    {
+      "case": "BaselineConfig-int8_matmul-16.disassembly.txt",
+      "function": "dp_baseline",
+      "instructions": 39,
+      "instruction_words_sha256": "b4ab1ee2394c53abf49625d6c2be3941e148f1fbeeeedabe3aedc8e9a7dbb72a"
+    },
+    {
+      "case": "BaselineConfig-int8_matmul-32.disassembly.txt",
+      "function": "dot_baseline",
+      "instructions": 33,
+      "instruction_words_sha256": "c71386c8039cdf31e71287515b3a1942237f29954c5e7a5572c89cbf6b9432cf"
+    },
+    {
+      "case": "BaselineConfig-int8_matmul-32.disassembly.txt",
+      "function": "dp_baseline",
+      "instructions": 39,
+      "instruction_words_sha256": "b4ab1ee2394c53abf49625d6c2be3941e148f1fbeeeedabe3aedc8e9a7dbb72a"
+    },
+    {
+      "case": "BaselineConfig-int8_matmul-4.disassembly.txt",
+      "function": "dot_baseline",
+      "instructions": 33,
+      "instruction_words_sha256": "c71386c8039cdf31e71287515b3a1942237f29954c5e7a5572c89cbf6b9432cf"
+    },
+    {
+      "case": "BaselineConfig-int8_matmul-4.disassembly.txt",
+      "function": "dp_baseline",
+      "instructions": 39,
+      "instruction_words_sha256": "b4ab1ee2394c53abf49625d6c2be3941e148f1fbeeeedabe3aedc8e9a7dbb72a"
+    },
+    {
+      "case": "BaselineConfig-int8_matmul-7.disassembly.txt",
+      "function": "dot_baseline",
+      "instructions": 33,
+      "instruction_words_sha256": "c71386c8039cdf31e71287515b3a1942237f29954c5e7a5572c89cbf6b9432cf"
+    },
+    {
+      "case": "BaselineConfig-int8_matmul-7.disassembly.txt",
+      "function": "dp_baseline",
+      "instructions": 39,
+      "instruction_words_sha256": "b4ab1ee2394c53abf49625d6c2be3941e148f1fbeeeedabe3aedc8e9a7dbb72a"
+    },
+    {
+      "case": "BaselineConfig-int8_matmul-8.disassembly.txt",
+      "function": "dot_baseline",
+      "instructions": 33,
+      "instruction_words_sha256": "c71386c8039cdf31e71287515b3a1942237f29954c5e7a5572c89cbf6b9432cf"
+    },
+    {
+      "case": "BaselineConfig-int8_matmul-8.disassembly.txt",
+      "function": "dp_baseline",
+      "instructions": 39,
+      "instruction_words_sha256": "b4ab1ee2394c53abf49625d6c2be3941e148f1fbeeeedabe3aedc8e9a7dbb72a"
+    }
+  ]
+}

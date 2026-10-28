@@ -1,0 +1,94 @@
+{
+  "status": "PASS",
+  "exit_code": 0,
+  "records": [
+    {
+      "workload": "int8_matmul",
+      "size": "8",
+      "implementation": "baseline",
+      "trial": "1",
+      "platform": "rocket_rv64",
+      "status": "PASS",
+      "cycles": "22849",
+      "instructions": "4300",
+      "cpi": "",
+      "host_elapsed_ns": "",
+      "checksum": "10878003233006318475"
+    },
+    {
+      "workload": "int8_matmul",
+      "size": "8",
+      "implementation": "baseline",
+      "trial": "2",
+      "platform": "rocket_rv64",
+      "status": "PASS",
+      "cycles": "22961",
+      "instructions": "4300",
+      "cpi": "",
+      "host_elapsed_ns": "",
+      "checksum": "10878003233006318475"
+    },
+    {
+      "workload": "int8_matmul",
+      "size": "8",
+      "implementation": "baseline",
+      "trial": "3",
+      "platform": "rocket_rv64",
+      "status": "PASS",
+      "cycles": "22961",
+      "instructions": "4300",
+      "cpi": "",
+      "host_elapsed_ns": "",
+      "checksum": "10878003233006318475"
+    },
+    {
+      "workload": "int8_matmul",
+      "size": "8",
+      "implementation": "custom",
+      "trial": "1",
+      "platform": "rocket_rv64",
+      "status": "PASS",
+      "cycles": "12620",
+      "instructions": "10403",
+      "cpi": "",
+      "host_elapsed_ns": "",
+      "checksum": "10878003233006318475"
+    },
+    {
+      "workload": "int8_matmul",
+      "size": "8",
+      "implementation": "custom",
+      "trial": "2",
+      "platform": "rocket_rv64",
+      "status": "PASS",
+      "cycles": "12646",
+      "instructions": "10403",
+      "cpi": "",
+      "host_elapsed_ns": "",
+      "checksum": "10878003233006318475"
+    },
+    {
+      "workload": "int8_matmul",
+      "size": "8",
+      "implementation": "custom",
+      "trial": "3",
+      "platform": "rocket_rv64",
+      "status": "PASS",
+      "cycles": "12646",
+      "instructions": "10403",
+      "cpi": "",
+      "host_elapsed_ns": "",
+      "checksum": "10878003233006318475"
+    }
+  ],
+  "run_command": [
+    "/workspace/chipyard/sims/verilator/simulator-chipyard.harness-FineGrainedConfig",
+    "+permissive",
+    "+loadmem=/workspace/student-work/fine-grained/results/20261015T002635Z-s8/FineGrainedConfig-int8_matmul-8.riscv",
+    "+permissive-off",
+    "/workspace/student-work/fine-grained/results/20261015T002635Z-s8/FineGrainedConfig-int8_matmul-8.riscv"
+  ],
+  "input": [
+    "INPUT,int8_matmul,8,6401542720493938066"
+  ]
+}

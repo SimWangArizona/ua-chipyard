@@ -1,0 +1,56 @@
+{
+  "status": "PASS",
+  "exit_code": 0,
+  "records": [
+    {
+      "workload": "int8_matmul",
+      "size": "1",
+      "implementation": "baseline",
+      "trial": "1",
+      "platform": "rocket_rv64",
+      "status": "PASS",
+      "cycles": "82",
+      "instructions": "37",
+      "cpi": "",
+      "host_elapsed_ns": "",
+      "checksum": "7720362999764603231"
+    },
+    {
+      "workload": "int8_matmul",
+      "size": "1",
+      "implementation": "baseline",
+      "trial": "2",
+      "platform": "rocket_rv64",
+      "status": "PASS",
+      "cycles": "82",
+      "instructions": "37",
+      "cpi": "",
+      "host_elapsed_ns": "",
+      "checksum": "7720362999764603231"
+    },
+    {
+      "workload": "int8_matmul",
+      "size": "1",
+      "implementation": "baseline",
+      "trial": "3",
+      "platform": "rocket_rv64",
+      "status": "PASS",
+      "cycles": "82",
+      "instructions": "37",
+      "cpi": "",
+      "host_elapsed_ns": "",
+      "checksum": "7720362999764603231"
+    }
+  ],
+  "input": [
+    "INPUT,int8_matmul,1,713056413481212256"
+  ],
+  "run_command": [
+    "/workspace/chipyard/sims/verilator/simulator-chipyard.harness-BaselineConfig",
+    "+permissive",
+    "+loadmem=/workspace/student-work/fine-grained/results/20261015T002635Z-s8/BaselineConfig-int8_matmul-1.riscv",
+    "+permissive-off",
+    "/workspace/student-work/fine-grained/results/20261015T002635Z-s8/BaselineConfig-int8_matmul-1.riscv"
+  ],
+  "normal_load_control": "/workspace/student-work/fine-grained/results/20261015T002635Z-s8/normal-load-controls/BaselineConfig-int8_matmul-1.json"
+}

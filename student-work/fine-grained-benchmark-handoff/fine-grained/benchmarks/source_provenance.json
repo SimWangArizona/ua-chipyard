@@ -1,0 +1,37 @@
+[
+    {
+        "File":  "bench.h",
+        "Identical":  true,
+        "SHA256":  "EA03B3C9471EDF32CADE60CECC6E197256E611B6C5865BADCAEE3CEF69C0D1D9"
+    },
+    {
+        "File":  "dot_bench.c",
+        "Identical":  true,
+        "SHA256":  "8EE11417F4B6C0B380D4BE4BA0E30C3389063F960FBFEF3F92B68DD541AAA6E2"
+    },
+    {
+        "File":  "dp_bench.c",
+        "Identical":  true,
+        "SHA256":  "2E4B3B1CD2BCDA1B895CCDF314EC02DB197695D448899643D44CA78638ADC0C6"
+    },
+    {
+        "File":  "benchmark.c",
+        "Identical":  true,
+        "SHA256":  "4FBACE72E31CFB232D78D2D62DFC4B2BFD2533D29F20128F375BAFC4951C2B0D"
+    },
+    {
+        "File":  "Makefile",
+        "Identical":  true,
+        "SHA256":  "3779693AA2D7EDCA89B5BBC71166C65D22DEB85BA676AA857F920548E192F938"
+    },
+    {
+        "File":  "run_benchmarks.py",
+        "Identical":  true,
+        "SHA256":  "0EEFB873935991C76CCD13BE891CA08C9836F49BC13C6A27777DBA1D9A2F639A"
+    },
+    {
+        "File":  "host_report.md",
+        "Identical":  true,
+        "SHA256":  "B0C2B8BF3BEC92C17CF083555A982B4D8A8707769E029257AB349F42745395DA"
+    }
+]

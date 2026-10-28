@@ -1,0 +1,39 @@
+--- common/benchmark.c
++++ driver.c
+@@ -124,11 +124,18 @@
+ }
+ static int run_workload(int dot)
+ {
+-    const size_t sizes[] = {1,4,7,8,16,32};
++    const size_t sizes[] = {ECE562_SINGLE_N};
+     int failures = 0;
+     for (size_t s = 0; s < sizeof(sizes)/sizeof(sizes[0]); ++s) {
+         size_t n = sizes[s];
+         if (dot) prepare_dot(n); else prepare_dp(n);
++        uint64_t ih = UINT64_C(14695981039346656037);
++        for (size_t x = 0; x < n*n; ++x) {
++            if (dot) { ih ^= (uint8_t)a[x]; ih *= UINT64_C(1099511628211);
++                       ih ^= (uint8_t)b[x]; ih *= UINT64_C(1099511628211); }
++            else { ih ^= (uint32_t)input[x]; ih *= UINT64_C(1099511628211); }
++        }
++        printf("INPUT,%s,%lu,%" PRIu64 "\n", dot ? "int8_matmul" : "floyd_warshall", n, ih);
+         for (size_t impl = 0; impl < sizeof(names)/sizeof(names[0]); ++impl) {
+             /* One warm-up, verified, with the same initialized input. */
+             if (dot) memset(output,0,n*n*sizeof(*output));
+@@ -146,13 +153,13 @@
+ #ifdef ECE562_RISCV_COUNTERS
+                 uint64_t cycles = end.cycles-start.cycles;
+                 uint64_t instructions = end.instructions-start.instructions;
+-                printf("%s,%zu,%s,%d,rocket_rv64,%s,%" PRIu64 ",%" PRIu64 ",",
++                printf("%s,%lu,%s,%d,rocket_rv64,%s,%" PRIu64 ",%" PRIu64 ",",
+                        dot ? "int8_matmul" : "floyd_warshall",n,names[impl],trial,
+                        passed ? "PASS" : "FAIL",cycles,instructions);
+-                if (instructions) printf("%.6f",(double)cycles/(double)instructions);
++                /* CPI is computed on the host; no target floating-point formatting. */
+                 printf(",,%" PRIu64 "\n",checksum(n));
+ #else
+-                printf("%s,%zu,%s,%d,host,%s,,,,%" PRIu64 ",%" PRIu64 "\n",
++                printf("%s,%lu,%s,%d,host,%s,,,,%" PRIu64 ",%" PRIu64 "\n",
+                        dot ? "int8_matmul" : "floyd_warshall",n,names[impl],trial,
+                        passed ? "PASS" : "FAIL",end.ns-start.ns,checksum(n));
+ #endif

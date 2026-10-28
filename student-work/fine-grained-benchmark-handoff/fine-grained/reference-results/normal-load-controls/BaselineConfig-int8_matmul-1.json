@@ -1,0 +1,48 @@
+{
+  "status": "PASS",
+  "exit_code": 0,
+  "records": [
+    {
+      "workload": "int8_matmul",
+      "size": "1",
+      "implementation": "baseline",
+      "trial": "1",
+      "platform": "rocket_rv64",
+      "status": "PASS",
+      "cycles": "82",
+      "instructions": "37",
+      "cpi": "",
+      "host_elapsed_ns": "",
+      "checksum": "7720362999764603231"
+    },
+    {
+      "workload": "int8_matmul",
+      "size": "1",
+      "implementation": "baseline",
+      "trial": "2",
+      "platform": "rocket_rv64",
+      "status": "PASS",
+      "cycles": "82",
+      "instructions": "37",
+      "cpi": "",
+      "host_elapsed_ns": "",
+      "checksum": "7720362999764603231"
+    },
+    {
+      "workload": "int8_matmul",
+      "size": "1",
+      "implementation": "baseline",
+      "trial": "3",
+      "platform": "rocket_rv64",
+      "status": "PASS",
+      "cycles": "82",
+      "instructions": "37",
+      "cpi": "",
+      "host_elapsed_ns": "",
+      "checksum": "7720362999764603231"
+    }
+  ],
+  "input": [
+    "INPUT,int8_matmul,1,713056413481212256"
+  ]
+}

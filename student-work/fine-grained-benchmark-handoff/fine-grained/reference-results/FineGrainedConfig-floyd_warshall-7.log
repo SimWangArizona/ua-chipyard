@@ -1,0 +1,11 @@
+%Warning: System has stack size 8192 kb which may be too small; suggest 'ulimit -c 11431' or larger
+[UART] UART0 is here (stdin/stdout).
+workload,size,implementation,trial,platform,status,cycles,instructions,cpi,host_elapsed_ns,checksum
+INPUT,floyd_warshall,7,11591702054227304283
+floyd_warshall,7,baseline,1,rocket_rv64,PASS,7497,4322,,,13987258159862079239
+floyd_warshall,7,baseline,2,rocket_rv64,PASS,7533,4322,,,13987258159862079239
+floyd_warshall,7,baseline,3,rocket_rv64,PASS,7533,4322,,,13987258159862079239
+floyd_warshall,7,custom,1,rocket_rv64,PASS,10385,8314,,,13987258159862079239
+floyd_warshall,7,custom,2,rocket_rv64,PASS,10410,8314,,,13987258159862079239
+floyd_warshall,7,custom,3,rocket_rv64,PASS,10410,8314,,,13987258159862079239
+- /workspace/chipyard/sims/verilator/generated-src/chipyard.harness.TestHarness.FineGrainedConfig/gen-collateral/TestDriver.v:158: Verilog $finish
